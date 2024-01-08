@@ -53,11 +53,11 @@ async function displayAlbums() {
     const cardContainer = document.querySelector(".cardContainer");
 
     Array.from(anchors).forEach(async element => {
-        if (element.href.includes("/songs")) {
+        if (element.href.includes("../songs")) {
             const folder = element.href.split("/").slice(-2)[0];
 
             try {
-                const metadataResponse = await fetch(`/songs/${folder}/info.json`);
+                const metadataResponse = await fetch(`../songs/${folder}/info.json`);
                 if (metadataResponse.ok) {
                     const metadata = await metadataResponse.json();
                     console.log(metadata);
@@ -78,7 +78,7 @@ async function displayAlbums() {
 }
 
 async function main() {
-    await getSongs("songs/Animal");
+    await getSongs("../songs/Animal");
     playMusic(songs[0], true);
     displayAlbums();
 
