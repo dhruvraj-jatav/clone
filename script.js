@@ -80,7 +80,7 @@ function playMusic(track, pause = false) {
 
 async function displayAlbums() {
     console.log("displaying albums")
-    const newLocal_1 = await fetch("../songs/");
+    const newLocal_1 = await fetch("/songs/");
     let a = newLocal_1;
     let response = await a.text();
     let div = document.createElement("div");
@@ -90,11 +90,11 @@ async function displayAlbums() {
     let array = Array.from(anchors);
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
-        if (e.href.includes("../songs")) {
+        if (e.href.includes("/songs")) {
             let folder = e.href.split("/").slice(-2)[0];
             try {
                 // get the metadata of the folder
-                let a = await fetch(`../songs/${folder}/info.json`);
+                let a = await fetch(`/songs/${folder}/info.json`);
                 if (a.ok) {
                     let response = await a.json();
                     console.log(response);
@@ -106,7 +106,7 @@ async function displayAlbums() {
                                     stroke-linejoin="round" />
                             </svg>
                         </div>
-                        <img src="../songs/${folder}/cover.jpg" alt="">
+                        <img src="/songs/${folder}/cover.jpg" alt="">
                         <h2>${response.title}</h2>
                         <p>${response.description}</p>
                     </div>`;
@@ -132,7 +132,7 @@ async function main() {
 
 
     // get the list of all the songs
-    await getSongs("../songs/Animal")
+    await getSongs("/songs/Animal")
     playMusic(songs[0], true)
 
     // display all the albums on the page
@@ -144,11 +144,11 @@ async function main() {
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play()
-            play.src = "../img/pause.svg"
+            play.src = "/img/pause.svg"
         }
         else {
             currentSong.pause()
-            play.src = "../img/play.svg"
+            play.src = "/img/play.svg"
         }
     })
 
@@ -210,13 +210,13 @@ async function main() {
 
     // add event listener to mute the track 
     document.querySelector(".volume>img").addEventListener("click", e => {
-        if (e.target.src.includes("../img/volume.svg")) {
-            e.target.src = e.target.src.replace("../img/volume.svg", "../img/mute.svg")
+        if (e.target.src.includes("img/volume.svg")) {
+            e.target.src = e.target.src.replace("img/volume.svg", "img/mute.svg")
             currentSong.volume = 0;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
         }
         else {
-            e.target.src = e.target.src.replace("../img/mute.svg", "../img/volume.svg")
+            e.target.src = e.target.src.replace("/img/mute.svg", "/img/volume.svg")
             currentSong.volume = .10;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 10;
         }
